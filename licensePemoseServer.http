@@ -1,0 +1,6 @@
+@licensePemoseServer_HostAddress = http://localhost:5022
+
+GET {{licensePemoseServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

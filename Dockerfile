@@ -1,0 +1,25 @@
+﻿
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["./licensePemoseServer/licensePemoseServer.csproj", "licensePemoseServer/"]
+RUN dotnet restore "./licensePemoseServer/licensePemoseServer.csproj"
+COPY . .
+WORKDIR "/src/licensePemoseServer"
+RUN dotnet build "./licensePemoseServer.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./licensePemoseServer.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+COPY ./LicenseManagerCloud/privateKey.xml /app/privateKey.xml
+ENTRYPOINT ["dotnet", "licensePemoseServer.dll"]

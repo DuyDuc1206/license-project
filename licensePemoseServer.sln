@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "licensePemoseServer", "licensePemoseServer.csproj", "{73B4ACDC-D1FF-4481-BB3B-6DC4D6939F98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73B4ACDC-D1FF-4481-BB3B-6DC4D6939F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B4ACDC-D1FF-4481-BB3B-6DC4D6939F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B4ACDC-D1FF-4481-BB3B-6DC4D6939F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B4ACDC-D1FF-4481-BB3B-6DC4D6939F98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1DA2356-9F9F-40B7-A05E-68D3AC0DEF15}
+	EndGlobalSection
+EndGlobal

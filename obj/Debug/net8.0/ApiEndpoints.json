@@ -1,0 +1,70 @@
+[
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "CreateLicense",
+    "RelativePath": "api/License/Create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "licensePemoseServer.Models.License",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "GetAllLicense",
+    "RelativePath": "api/License/GetAllLicense",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "GetToken",
+    "RelativePath": "api/License/GetToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "LicenseManagerCloud.Models.GetTokenRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "ValidateLicense",
+    "RelativePath": "api/License/Validate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "GetLicense",
+    "RelativePath": "api/License/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
