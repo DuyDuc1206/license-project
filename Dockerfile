@@ -13,7 +13,7 @@ RUN dotnet restore "./licensePemoseServer.csproj"
 COPY . .
 WORKDIR "/src/licensePemoseServer"
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet build "./licensePemoseServer.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./licensePemoseServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
