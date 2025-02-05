@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["./licensePemoseServer.csproj", ""]
 RUN dotnet restore "./licensePemoseServer.csproj"
 COPY . .
-WORKDIR "/src/licensePemoseServer"
+WORKDIR "/src"
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet build "./licensePemoseServer.csproj" -c ${BUILD_CONFIGURATION} -o /app/build
 
