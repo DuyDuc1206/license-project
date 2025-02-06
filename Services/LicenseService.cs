@@ -37,10 +37,10 @@ namespace LicenseManagerCloud.Services
             return license;
         }
 
-        public async Task<License> GetLicenseByMachineIdAsync(string machineId)
+        public async Task<License> GetLicenseByMachineIdAsync(string licenseKey)
         {
             //var decodeMachineId = Base64Decode(machineId);
-            return await _context.Set<License>().FirstOrDefaultAsync(l => l.MachineId == machineId);
+            return await _context.Set<License>().FirstOrDefaultAsync(l => l.LicenseKey == licenseKey);
         }
 
         public async Task<string> GetTokenByLicenseAsync(string licensekey)
