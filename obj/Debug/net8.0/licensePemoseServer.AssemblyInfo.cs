@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("licensePemoseServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad6e43fa57f6fdcc51133b202c93a46868ea08e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23f3e6b8ed0233ac21daf1f3a1bd9c62e042dc5c")]
 [assembly: System.Reflection.AssemblyProductAttribute("licensePemoseServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("licensePemoseServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

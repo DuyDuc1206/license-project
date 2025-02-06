@@ -62,7 +62,6 @@ namespace LicenseManagerCloud.Controllers
                 return BadRequest("License Key is required.");
             }
 
-            //var token = await _licenseService.GetLicenseByMachineIdAsync(request.LicenseKey);
             var token = await _licenseService.GetTokenByLicenseAsync(request.LicenseKey);
 
             if (token == null)
