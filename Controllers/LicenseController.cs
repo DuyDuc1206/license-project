@@ -70,7 +70,7 @@ namespace LicenseManagerCloud.Controllers
                 return BadRequest("Your license is invalid.");
             }
 
-            return Ok(new {Token = token });
+            return Ok(token);
         }
 
         //[HttpPut("UpdateStatus")]
