@@ -92,7 +92,7 @@ namespace LicenseManagerCloud.Services
             return await _context.Set<License>().ToListAsync();
         }
 
-        private string GenerateToken(string machineId,string machineName, DateTime expiryDate)
+        private string GenerateToken(string machineId, string machineName, DateTime expiryDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var rsa = GetRsaPrivateKey();  // Bạn cần sử dụng private key để ký token
@@ -102,22 +102,23 @@ namespace LicenseManagerCloud.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("DeviceID", machineId),
-                    new Claim("DeviceName", machineName),
-                    new Claim("ExpiryTime", expiryDate.ToUniversalTime().ToString("o"))
-                }),
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
+            new Claim("DeviceID", machineId),
+            new Claim("DeviceName", machineName),
+            new Claim("ExpiryTime", expiryDate.ToUniversalTime().ToString("o"))
+        }),
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256),
+                Expires = expiryDate
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            Console.WriteLine("JWT Token: " + token);
-            return tokenHandler.WriteToken(token);
 
+            // In ra toàn bộ JWT Token
+            Console.WriteLine("JWT Token: " + tokenHandler.WriteToken(token));
+
+            // Trả về JWT token dưới dạng chuỗi
+            return tokenHandler.WriteToken(token);
         }
-        private static string Base64UrlEncode(byte[] input)
-        {
-            return Convert.ToBase64String(input).TrimEnd('=').Replace('+', '-').Replace('/', '_');
-        }
+
 
         private RSA GetRsaPrivateKey()
         {
@@ -133,15 +134,19 @@ namespace LicenseManagerCloud.Services
                    Convert.ToBase64String(privateKeyBytes, Base64FormattingOptions.InsertLineBreaks) +
                    "\n-----END PRIVATE KEY-----";
         }
-        public static string Base64Encode(string plainText)
+        private static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
         }
-        public static string Base64Decode(string base64EncodedData)
+        private static string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+        private static string Base64UrlEncode(byte[] input)
+        {
+            return Convert.ToBase64String(input).TrimEnd('=').Replace('+', '-').Replace('/', '_');
         }
     }
 }
