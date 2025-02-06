@@ -105,7 +105,7 @@ namespace LicenseManagerCloud.Services
                 {
                     new Claim("DeviceID", machineId),
                     new Claim("DeviceName", machineName),
-                    new Claim("ExpiryTime", expiryDate.ToString("yyyy-MM-ddTHH:mm:ss"))
+                    new Claim("ExpiryTime", expiryDate.ToUniversalTime().ToString("o"))
                 }),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
             };
