@@ -45,7 +45,7 @@ namespace LicenseManagerCloud.Services
 
         public async Task<string> GetTokenByLicenseAsync(string licensekey)
         {
-            var licenseData = Encoding.UTF8.GetString(Convert.FromBase64String(licensekey));
+            var licenseData = Base64Decode(licensekey);
             var licenseParts = licenseData.Split('|');
             if (licenseParts.Length != 3)
             {
