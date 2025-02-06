@@ -96,8 +96,8 @@ namespace LicenseManagerCloud.Services
         private string GenerateToken(string machineId,string machineName, DateTime expiryDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            string privateKeyXml = File.ReadAllText("privateKey.xml");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(privateKeyXml));
+            var rsa = GetRsaPrivateKey();  // Bạn cần sử dụng private key để ký token
+            var key = new RsaSecurityKey(rsa);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -111,6 +111,7 @@ namespace LicenseManagerCloud.Services
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
+            Console.WriteLine("JWT Token: " + token);
             return tokenHandler.WriteToken(token);
 
         }
@@ -121,11 +122,9 @@ namespace LicenseManagerCloud.Services
 
         private RSA GetRsaPrivateKey()
         {
-            
             RSA rsa = new RSACryptoServiceProvider();
             string privateKeyXml = File.ReadAllText("privateKey.xml");
             rsa.FromXmlString(privateKeyXml);
-            //RSA pemPrivateKey = ExportPrivateKeyToPem(rsa);
             return rsa;
         }
         static string ExportPrivateKeyToPem(RSACryptoServiceProvider rsa)
