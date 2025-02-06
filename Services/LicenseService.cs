@@ -47,7 +47,7 @@ namespace LicenseManagerCloud.Services
         {
             var licenseData = Encoding.UTF8.GetString(Convert.FromBase64String(licensekey));
             var licenseParts = licenseData.Split('|');
-            if (licenseParts.Length != 4)
+            if (licenseParts.Length != 3)
             {
                 return null;  // Dữ liệu không hợp lệ
             }
@@ -56,12 +56,12 @@ namespace LicenseManagerCloud.Services
             var machineName = licenseParts[1];
             var maxSheets = int.Parse(licenseParts[2]);
 
-            var license = await _context.Set<License>().FirstOrDefaultAsync(l => l.LicenseKey == licensekey);
-            if (license == null || license.Status != "Enable")
+            var dbContext = await _context.Set<License>().FirstOrDefaultAsync(l => l.LicenseKey == licensekey);
+            if (dbContext == null || dbContext.Status != "Enable")
             {
                 return null;
             }
-            var token = GenerateToken(license.MachineId, license.MachineName, license.ExpiryDate);
+            var token = GenerateToken(dbContext.MachineId, dbContext.MachineName, dbContext.ExpiryDate);
             if (token != null)
             {
                 return token;
