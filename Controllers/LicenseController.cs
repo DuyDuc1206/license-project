@@ -2,6 +2,7 @@
 using LicenseManagerCloud.Models;
 using LicenseManagerCloud.Services;
 using licensePemoseServer.Models;
+using licensePemoseServer.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LicenseManagerCloud.Controllers
@@ -11,10 +12,12 @@ namespace LicenseManagerCloud.Controllers
     public class LicenseController : ControllerBase
     {
         private readonly ILicenseService _licenseService;
+        private readonly IPluginService _pluginService;
 
-        public LicenseController(ILicenseService license)
+        public LicenseController(ILicenseService license, IPluginService plugin)
         {
             _licenseService = license;
+            _pluginService = plugin;
         }
 
         [HttpPost("Create")]
@@ -39,6 +42,39 @@ namespace LicenseManagerCloud.Controllers
             request.ExpiryDate);
 
             return CreatedAtAction(nameof(GetLicense), new { id = license.Id }, license);
+        }
+
+        [HttpPost("Create/Plugin")]
+        public async Task<IActionResult> CreatePlugin([FromBody] Plugin request)
+        {
+            if (string.IsNullOrEmpty(request.PluginName) || string.IsNullOrEmpty(request.Version))
+            {
+                return BadRequest("Plugin Key and ID are required.");
+            }
+
+            var existPlugin = await _pluginService.GetPluginByIdAsync(request.PluginId);
+            if (existPlugin != null)
+            {
+                return Conflict("A Plugin for this machine already exists.");
+            }
+
+            var plugin = await _pluginService.CreatePluginAsync(
+            request.PluginName,
+            request.Version,
+            request.Description);
+
+            return CreatedAtAction(nameof(GetPlugin), new { id = plugin.PluginId }, plugin);
+        }
+        [HttpGet("plugin/{id}")]
+        public async Task<IActionResult> GetPlugin(int id)
+        {
+            var plugin = await _pluginService.GetPluginByIdAsync(id);
+            if (plugin == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(plugin);
         }
 
         [HttpGet("{id}")]

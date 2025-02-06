@@ -17,6 +17,22 @@
   },
   {
     "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "CreatePlugin",
+    "RelativePath": "api/License/Create/Plugin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "licensePemoseServer.Models.Plugin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
     "Method": "GetAllLicense",
     "RelativePath": "api/License/GetAllLicense",
     "HttpMethod": "GET",
@@ -49,6 +65,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LicenseManagerCloud.Controllers.LicenseController",
+    "Method": "GetPlugin",
+    "RelativePath": "api/License/plugin/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

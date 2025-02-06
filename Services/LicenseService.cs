@@ -45,7 +45,7 @@ namespace LicenseManagerCloud.Services
 
         public async Task<string> GetTokenByLicenseAsync(string licensekey)
         {
-            var licenseData = Base64Decode(licensekey);
+            var licenseData = Encoding.UTF8.GetString(Convert.FromBase64String(licensekey));
             var licenseParts = licenseData.Split('|');
             if (licenseParts.Length != 3)
             {
@@ -54,7 +54,7 @@ namespace LicenseManagerCloud.Services
 
             var machineId = licenseParts[0];
             var machineName = licenseParts[1];
-            var maxSheets = int.Parse(licenseParts[2]);
+            var plugin = licenseParts[2];
 
             var dbContext = await _context.Set<License>().FirstOrDefaultAsync(l => l.LicenseKey == licensekey);
             if (dbContext == null || dbContext.Status != "Enable")
@@ -112,7 +112,6 @@ namespace LicenseManagerCloud.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             Console.WriteLine("JWT Token: " + token);
             return tokenHandler.WriteToken(token);
-
         }
         private static string Base64UrlEncode(byte[] input)
         {
