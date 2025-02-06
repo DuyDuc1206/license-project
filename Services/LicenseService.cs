@@ -1,21 +1,17 @@
-﻿
-using licensePemoseServer.Data;
+﻿using licensePemoseServer.Data;
 using licensePemoseServer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace LicenseManagerCloud.Services
 {
     public class LicenseService : ILicenseService
     {
         private readonly ApplicationDbContext _context;
-
-        ////private readonly string privatePem = System.IO.File.ReadAllText("private_key.pem");
-        //private readonly string _issuer = "licensemanagerapiapp";
-        //private readonly string _audience = "licensemanagerapi";
 
         public LicenseService(ApplicationDbContext context)
         {
@@ -33,7 +29,6 @@ namespace LicenseManagerCloud.Services
                 MachineId = Base64Encode(machineId),
                 MachineName = Base64Encode(machineName),
                 Status = status,
-                //CreatedAt = CreateAtDateTime,
                 ExpiryDate = ExpicydateTime
             };
             _context.Add(license);
@@ -50,8 +45,19 @@ namespace LicenseManagerCloud.Services
 
         public async Task<string> GetTokenByLicenseAsync(string licensekey)
         {
+            var licenseData = Encoding.UTF8.GetString(Convert.FromBase64String(licensekey));
+            var licenseParts = licenseData.Split('|');
+            if (licenseParts.Length != 4)
+            {
+                return null;  // Dữ liệu không hợp lệ
+            }
+
+            var machineId = licenseParts[0];
+            var machineName = licenseParts[1];
+            var maxSheets = int.Parse(licenseParts[2]);
+
             var license = await _context.Set<License>().FirstOrDefaultAsync(l => l.LicenseKey == licensekey);
-            if (license == null || license.Status != "Enable" || license.ExpiryDate <= DateTime.UtcNow)
+            if (license == null || license.Status != "Enable")
             {
                 return null;
             }
@@ -99,9 +105,6 @@ namespace LicenseManagerCloud.Services
                     new Claim("DeviceName", machineName),
                     new Claim("ExpiryTime", expiryDate.ToString("yyyy-MM-ddTHH:mm:ss"))
                 }),
-                //Expires = DateTime.UtcNow.AddDays(30), // Đặt thời gian hết hạn
-                //NotBefore = DateTime.UtcNow,           // Token có hiệu lực ngay lập tức
-                //IssuedAt = DateTime.UtcNow,            // Thời điểm phát hành token
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
             };
 
@@ -111,8 +114,7 @@ namespace LicenseManagerCloud.Services
 
         private RSA GetRsaPrivateKey()
         {
-            //RSA rSA = RSA.Create();
-            //rSA.ImportFromEncryptedPem(privatePem.ToString(), "");
+            
             RSA rsa = new RSACryptoServiceProvider();
             string privateKeyXml = File.ReadAllText("privateKey.xml");
             rsa.FromXmlString(privateKeyXml);

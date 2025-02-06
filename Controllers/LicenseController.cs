@@ -56,6 +56,12 @@ namespace LicenseManagerCloud.Controllers
         [HttpPost("GetToken")]
         public async Task<IActionResult> GetToken([FromBody] GetTokenRequest request)
         {
+
+            if (string.IsNullOrEmpty(request.LicenseKey))
+            {
+                return BadRequest("License Key is required.");
+            }
+
             var token = await _licenseService.GetTokenByLicenseAsync(request.LicenseKey);
 
             if (token == null)

@@ -138,3 +138,4 @@ D:\plugin\licensePemoseServer\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTo
 D:\plugin\licensePemoseServer\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
 D:\plugin\licensePemoseServer\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\plugin\licensePemoseServer\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\plugin\licensePemoseServer\obj\Debug\net8.0\licensePemoseServer.sourcelink.json
