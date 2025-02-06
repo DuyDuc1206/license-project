@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace LicenseManagerCloud.Services
 {
@@ -64,6 +65,7 @@ namespace LicenseManagerCloud.Services
             var token = GenerateToken(dbContext.MachineId, dbContext.MachineName, dbContext.ExpiryDate);
             if (token != null)
             {
+                Console.WriteLine("Generated JWT Token: " + token);
                 return token;
             }
             return null;
@@ -94,8 +96,8 @@ namespace LicenseManagerCloud.Services
         private string GenerateToken(string machineId,string machineName, DateTime expiryDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var rsa = GetRsaPrivateKey();
-            var key = new RsaSecurityKey(rsa);
+            string privateKeyXml = File.ReadAllText("privateKey.xml");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(privateKeyXml));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -110,6 +112,11 @@ namespace LicenseManagerCloud.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+
+        }
+        private static string Base64UrlEncode(byte[] input)
+        {
+            return Convert.ToBase64String(input).TrimEnd('=').Replace('+', '-').Replace('/', '_');
         }
 
         private RSA GetRsaPrivateKey()
