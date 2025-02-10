@@ -19,6 +19,6 @@ namespace licensePemoseServer.Models
 
         // Khóa ngoại tham chiếu đến plugin
         public int PluginId { get; set; }
-        public Plugin Plugin { get; set; }
+        public Plugin? Plugin { get; set; }
     }
 }

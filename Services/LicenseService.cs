@@ -29,7 +29,6 @@ namespace LicenseManagerCloud.Services
 
             var license = new License
             {
-                Id = 0,
                 LicenseKey = licensekey,
                 MachineId = Base64Encode(machineId),
                 MachineName = Base64Encode(machineName),
