@@ -13,11 +13,12 @@ namespace licensePemoseServer.Models
         public string MachineId { get; set; }
         public string MachineName { get; set; }
         public string Status { get; set; } = "Enable";
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime ExpiryDate { get; set; }
 
 
         // Khóa ngoại tham chiếu đến plugin
+        [Required]
         public int PluginId { get; set; }
         public Plugin? Plugin { get; set; }
     }

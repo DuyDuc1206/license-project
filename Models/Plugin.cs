@@ -14,6 +14,6 @@ namespace licensePemoseServer.Models
         public string Description { get; set; }
 
         // Thêm danh sách License liên kết với Plugin này
-        public List<License> Licenses { get; set; } = new List<License>();
+        public List<License>? Licenses { get; set; } = new List<License>();
     }
 }
