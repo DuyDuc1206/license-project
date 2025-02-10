@@ -34,7 +34,7 @@ namespace LicenseManagerCloud.Services
                 MachineName = Base64Encode(machineName),
                 Status = status,
                 ExpiryDate = ExpicydateTime,
-                Plugin = plugin
+                PluginId = pluginId
             };
             _context.Add(license);
             await _context.SaveChangesAsync();
