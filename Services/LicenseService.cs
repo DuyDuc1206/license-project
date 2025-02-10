@@ -18,9 +18,14 @@ namespace LicenseManagerCloud.Services
             _context = context;
         }
 
-        public async Task<License> CreateLicenseAsync(string licensekey, string machineId, string machineName, string status, DateTime expicyDate)
+        public async Task<License> CreateLicenseAsync(string licensekey, string machineId, string machineName, string status, DateTime expicyDate, int pluginId)
         {
             DateTime ExpicydateTime = DateTime.SpecifyKind(expicyDate, DateTimeKind.Utc);
+            var plugin = await _context.Set<Plugin>().FirstOrDefaultAsync(p => p.PluginId == pluginId);
+            if (plugin == null)
+            {
+                throw new Exception("Plugin not found.");
+            }
 
             var license = new License
             {
@@ -29,7 +34,8 @@ namespace LicenseManagerCloud.Services
                 MachineId = Base64Encode(machineId),
                 MachineName = Base64Encode(machineName),
                 Status = status,
-                ExpiryDate = ExpicydateTime
+                ExpiryDate = ExpicydateTime,
+                Plugin = plugin
             };
             _context.Add(license);
             await _context.SaveChangesAsync();

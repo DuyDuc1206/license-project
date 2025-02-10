@@ -34,14 +34,23 @@ namespace LicenseManagerCloud.Controllers
                 return Conflict("A license for this machine already exists.");
             }
 
-            var license = await _licenseService.CreateLicenseAsync(
-            request.LicenseKey,
-            request.MachineId,
-            request.MachineName,
-            request.Status ?? "Enable",
-            request.ExpiryDate);
+            try
+            {
+                var license = await _licenseService.CreateLicenseAsync(
+                    request.LicenseKey,
+                    request.MachineId,
+                    request.MachineName,
+                    request.Status ?? "Enable",
+                    request.ExpiryDate,
+                    request.PluginId  // Thêm pluginId vào request
+                );
 
-            return CreatedAtAction(nameof(GetLicense), new { id = license.Id }, license);
+                return CreatedAtAction(nameof(GetLicense), new { id = license.Id }, license);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("Create/Plugin")]
